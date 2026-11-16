@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import { spawn } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { constants } from "node:os";
 
+const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+
 const child = spawn("uvx", [
-  "--from", "stream-clipper[mcp]==0.1.0",
+  "--from", `stream-clipper[mcp]==${version}`,
   "stream-clipping-mcp", ...process.argv.slice(2),
 ], { stdio: "inherit" });
 

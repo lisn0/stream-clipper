@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.lisn0/stream-clipper",
+  "title": "Stream Clipper",
+  "description": "List local clips and prepare them for review or publishing.",
+  "repository": {
+    "url": "https://github.com/lisn0/stream-clipper",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "stream-clipper",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "named",
+          "name": "--clips-dir",
+          "description": "Absolute path to your local clips directory.",
+          "format": "filepath",
+          "isRequired": true
+        }
+      ]
+    }
+  ]
+}

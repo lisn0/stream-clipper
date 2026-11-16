@@ -233,3 +233,17 @@ python3 -B -m unittest discover -s tests -v
 
 Project code is under the [MIT License](LICENSE). The external tools and model
 weights retain their own licenses.
+
+## Maintainer releases
+
+Set the same version in `pyproject.toml` and `package.json`. Build and test the
+Python distributions and the npm archive from that source. Attach these three
+files to the stable GitHub release before publishing it.
+
+- `stream_clipper-X.Y.Z-py3-none-any.whl`
+- `stream_clipper-X.Y.Z.tar.gz`
+- `stream-clipper-X.Y.Z.tgz`
+
+Publishing the GitHub release with tag `vX.Y.Z` uploads the Python distributions
+to PyPI first and the npm launcher second. Both registries require a trusted
+publisher for `publish-pypi.yml`. The PyPI job uses the `pypi` environment.
