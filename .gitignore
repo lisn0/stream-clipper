@@ -1,0 +1,12 @@
+# Credentials and local artifacts never enter the repo
+*.env
+.env
+*.local
+.venv/
+__pycache__/
+*.py[cod]
+
+# Pipeline outputs
+output/
+pipeline/output/
+pipeline/*.report.json
