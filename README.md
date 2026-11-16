@@ -1,10 +1,19 @@
-# Stream Clipping
+# Stream Clipper
 
-A local Python tool that watches explicitly selected Twitch channels, detects
-chat activity spikes, records live video, and cuts candidate clips. It can also
-prepare completed clips as drafts in PostFling for human review.
+Automatically cut local clips from live Twitch streams using chat activity
+spikes. Stream Clipper monitors selected channels and saves candidate MP4s for
+review. Browse finished clips through the local MCP server or send selected clips
+to PostFling as drafts.
 
-## Requirements
+[PyPI](https://pypi.org/project/stream-clipper/) ·
+[npm](https://www.npmjs.com/package/stream-clipper) ·
+[MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.lisn0%2Fstream-clipper/versions/latest)
+
+[Clip live Twitch streams](#clip-live-twitch-streams) · [Browse local clips with MCP](#browse-local-clips-with-mcp)
+
+## Clip live Twitch streams
+
+### Requirements
 
 - Python 3.10 or newer. The core pipeline uses only the Python standard library.
 - A [Twitch application](https://dev.twitch.tv/docs/authentication/register-app/)
@@ -16,7 +25,7 @@ prepare completed clips as drafts in PostFling for human review.
   `--fortnite-hud` and [faster-whisper](https://github.com/SYSTRAN/faster-whisper)
   with a cached Whisper Small model for speech-assisted options.
 
-## Installation
+### Install from PyPI
 
 Install the CLI from PyPI in a Python virtual environment:
 
@@ -25,12 +34,11 @@ python -m pip install stream-clipper
 ```
 
 Use `stream-clipping` to run the monitor and `stream-clipping-postfling` to
-preview or upload clips for draft review. These commands accept the same
-arguments as `pipeline/live_monitor.py` and `pipeline/push_to_postfling.py`
-in the source examples below. You can also run those scripts from a checkout
-without installing the package.
+preview or upload clips for draft review. From a source checkout, you can also
+run `python3 pipeline/live_monitor.py` and `python3 pipeline/push_to_postfling.py`
+with the same arguments.
 
-## Twitch use and authorization
+### Twitch use and authorization
 
 The monitor reads stream status from Twitch Helix and chat from Twitch IRC.
 Live recording uses yt-dlp. Use it only where you have authorization to record
@@ -43,7 +51,7 @@ third-party material in the clip. Twitch also documents its
 The monitor requires an explicit `--channels` list; there is no implicit channel
 selection. Use channel login names separated by commas.
 
-## Configure and run
+### Configure and run
 
 Create a local Twitch credential file (keep it outside source control):
 
@@ -57,7 +65,7 @@ run a short dry-run to check Twitch polling and chat connectivity. This mode
 does not record video:
 
 ```sh
-python3 pipeline/live_monitor.py \
+stream-clipping \
   --channels your_authorized_channel \
   --env secrets/twitch.env \
   --dry-run
@@ -66,7 +74,7 @@ python3 pipeline/live_monitor.py \
 After reviewing the dry-run output, start live recording and clipping:
 
 ```sh
-python3 pipeline/live_monitor.py \
+stream-clipping \
   --channels your_authorized_channel \
   --env secrets/twitch.env \
   --staging ./output/live
@@ -87,7 +95,7 @@ explicit channel and the credential file. That channel must be live. Smoke mode
 checks Twitch polling and chat but does not record. Use an active chat:
 
 ```sh
-python3 pipeline/live_monitor.py \
+stream-clipping \
   --channels your_authorized_channel \
   --env secrets/twitch.env \
   --smoke 30
@@ -126,12 +134,23 @@ Direct delivery is an explicit `--mode direct` action. Use it only when you
 have the required rights and authorization for the content and destination.
 Review each draft and destination before choosing direct delivery.
 
-## Optional MCP server
+## Browse local clips with MCP
 
 The stdio server lets an MCP client browse completed live clips while the
 monitor runs separately. Use an absolute path to a clips directory writable
 only by you and the monitor. Create it or wait for the monitor to save a clip
 before connecting the client.
+
+With Node.js and `uvx` on your MCP client's PATH, launch the server from npm:
+
+```sh
+npx --yes stream-clipper --clips-dir /absolute/path/to/output/live/clips
+```
+
+The launcher uses the published PyPI package. Call `list_clips` to see completed
+clips in that folder.
+
+### Run with uvx or install from PyPI
 
 With `uvx`, the client can launch the PyPI package with its MCP dependencies:
 
@@ -158,17 +177,6 @@ If your client cannot find `uvx` on its `PATH`, use the absolute path to it.
 You can also run `python -m pip install 'stream-clipper[mcp]'` in a virtual
 environment and point the client at the installed `stream-clipping-mcp`
 executable with `--clips-dir` and the absolute directory path as arguments.
-
-### Run with npx
-
-With Node.js and `uvx` on PATH, launch the same MCP server from npm:
-
-```sh
-npx --yes stream-clipper \
-  --clips-dir /path/to/clips
-```
-
-The launcher uses the published PyPI package and forwards all server options.
 
 ### Launch from a source checkout
 

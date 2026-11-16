@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "stream-clipper"
 version = "0.1.0"
-description = "Watch Twitch chat, record live streams, and export candidate clips."
+description = "Cut local clips from live Twitch streams using chat spikes and browse them through MCP."
+keywords = ["twitch", "twitch-chat", "stream-clipping", "live-streaming", "ffmpeg", "mcp"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

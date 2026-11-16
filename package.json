@@ -2,7 +2,16 @@
   "name": "stream-clipper",
   "mcpName": "io.github.lisn0/stream-clipper",
   "version": "0.1.0",
-  "description": "Launch the Stream Clipper MCP server from PyPI.",
+  "description": "Browse local clips from live Twitch streams with the Stream Clipper MCP server.",
+  "keywords": [
+    "twitch",
+    "twitch-chat",
+    "stream-clipping",
+    "live-streaming",
+    "ffmpeg",
+    "mcp",
+    "mcp-server"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
