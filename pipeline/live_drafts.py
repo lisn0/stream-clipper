@@ -13,9 +13,8 @@ from push_to_postfling import (
 )
 
 
-class LiveDrafts(threading.Thread):
-    def __init__(self, config_path, clips, channels, credentials, log):
-        super().__init__(name="postfling-drafts", daemon=True)
+class PostFlingDrafts:
+    def __init__(self, config_path, credentials, *, channels=None):
         config = json.loads(Path(config_path).read_text(encoding="utf-8"))
         if not isinstance(config, dict) or not isinstance(config.get("origin"), str):
             raise ValueError("PostFling config must specify an origin")
@@ -27,7 +26,9 @@ class LiveDrafts(threading.Thread):
         if not isinstance(self.destinations, dict) or not self.destinations:
             raise ValueError("PostFling destinations must map Twitch logins to channel IDs")
         for channel, destination in self.destinations.items():
-            if channel not in channels:
+            if not LIVE_CLIP_NAME.fullmatch(f"{channel}-0"):
+                raise ValueError("PostFling destinations must use Twitch logins")
+            if channels is not None and channel not in channels:
                 raise ValueError(f"unknown monitored Twitch source {channel!r}")
             if not isinstance(destination, str) or not destination.strip():
                 raise ValueError(f"PostFling destination ID is required for {channel}")
@@ -37,9 +38,6 @@ class LiveDrafts(threading.Thread):
         }
         if not all(self.credentials.values()):
             raise ValueError("set POSTFLING_EMAIL and POSTFLING_PASSWORD in the environment")
-        self.clips = clips
-        self.log = log
-        self.stopped = threading.Event()
 
     def connect(self):
         opener = postfling_opener(self.origin)
@@ -53,17 +51,27 @@ class LiveDrafts(threading.Thread):
             raise ValueError("could not verify the configured PostFling workspace")
         return opener
 
+
+class LiveDrafts(threading.Thread):
+    def __init__(self, config_path, clips, channels, credentials, log):
+        super().__init__(name="postfling-drafts", daemon=True)
+        self.postfling = PostFlingDrafts(config_path, credentials, channels=channels)
+        self.clips = clips
+        self.log = log
+        self.stopped = threading.Event()
+
     def sync(self):
+        postfling = self.postfling
         pending = []
         for sidecar in sorted(self.clips.glob(f"*{INSIGHTS_SUFFIX}")):
             stem = sidecar.name.removesuffix(INSIGHTS_SUFFIX)
             if not LIVE_CLIP_NAME.fullmatch(stem):
                 continue
             channel = stem.split("-", 1)[0]
-            destination = self.destinations.get(channel)
+            destination = postfling.destinations.get(channel)
             if destination is None:
                 continue
-            target = json.dumps([self.origin, self.workspace_id, destination])
+            target = json.dumps([postfling.origin, postfling.workspace_id, destination])
             target_id = hashlib.sha256(target.encode("utf-8")).hexdigest()[:16]
             receipt = sidecar.with_name(f"{stem}.postfling-{target_id}.json")
             if not receipt.exists():
@@ -71,10 +79,10 @@ class LiveDrafts(threading.Thread):
         if not pending:
             return
 
-        opener = self.connect()
-        channels, _ = call_json(opener, self.origin, "/api/channels")
+        opener = postfling.connect()
+        channels, _ = call_json(opener, postfling.origin, "/api/channels")
         available = {channel["id"] for channel in channels["channels"]}
-        media_by_hash = media_index(opener, self.origin)
+        media_by_hash = media_index(opener, postfling.origin)
         for stem, channel, destination, sidecar, receipt in pending:
             if self.stopped.is_set():
                 return
@@ -89,7 +97,7 @@ class LiveDrafts(threading.Thread):
                     raise ValueError("finished MP4 is missing")
                 caption = caption_from(insights, None, f"https://www.twitch.tv/{channel}")
                 draft_id, saved = save_clip_draft(
-                    opener, self.origin, destination, stem, mp4, "", caption, media_by_hash,
+                    opener, postfling.origin, destination, stem, mp4, "", caption, media_by_hash,
                 )
                 partial = receipt.with_suffix(".json.partial")
                 partial.write_text(json.dumps({"draft_id": draft_id}) + "\n", encoding="utf-8")

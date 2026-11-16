@@ -114,6 +114,59 @@ Direct delivery is an explicit `--mode direct` action. Use it only when you
 have the required rights and authorization for the content and destination.
 Review each draft and destination before choosing direct delivery.
 
+## Optional MCP server
+
+The stdio server lets an MCP client browse completed live clips while the
+monitor runs separately. Install the [MCP Python SDK](https://pypi.org/project/mcp/1.28.0/)
+in a virtual environment for the client to launch.
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-mcp.txt
+```
+
+Use absolute paths in your client's MCP server configuration. Create the clips
+directory or run the monitor until it saves a clip before connecting the client.
+Use a clips directory writable only by you and the monitor.
+
+```json
+{
+  "mcpServers": {
+    "stream-clipping": {
+      "command": "/absolute/path/to/stream-clipping/.venv/bin/python",
+      "args": [
+        "/absolute/path/to/stream-clipping/pipeline/clip_mcp.py",
+        "--clips-dir", "/absolute/path/to/output/live/clips"
+      ]
+    }
+  }
+}
+```
+
+`list_clips` shows the newest completed MP4 and insights pairs first. It returns
+clip IDs, Twitch logins, Unix timestamps, and optional duration, score, and
+trigger fields. Use `limit` (1–100, default 25) and `offset` (default 0) to page
+through results.
+
+To enable `save_postfling_draft`, append `--postfling-config` and the absolute
+path to a JSON file to `args`. Use the same workspace and Twitch-login mapping
+as the live monitor. Supply `POSTFLING_EMAIL` and `POSTFLING_PASSWORD` to the
+server process through your client's secret environment or launch wrapper.
+
+```json
+{
+  "origin": "https://workspace.example",
+  "workspace_id": "YOUR_WORKSPACE_ID",
+  "destinations": {
+    "your_authorized_channel": "YOUR_DESTINATION_CHANNEL_ID"
+  }
+}
+```
+
+Call `save_postfling_draft` with a `clip_id` from `list_clips`. The tool uploads
+that MP4 to the configured PostFling workspace and saves an editable draft for
+the mapped destination. Review and publish through PostFling.
+
 ## Tests
 
 With FFmpeg and ffprobe installed, run the full suite from the repository root:
