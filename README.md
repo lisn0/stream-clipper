@@ -159,6 +159,17 @@ You can also run `python -m pip install 'stream-clipper[mcp]'` in a virtual
 environment and point the client at the installed `stream-clipping-mcp`
 executable with `--clips-dir` and the absolute directory path as arguments.
 
+### Run with npx
+
+With Node.js and `uvx` on PATH, launch the same MCP server from GitHub:
+
+```sh
+npx --yes --package=github:lisn0/stream-clipper stream-clipper \
+  --clips-dir /path/to/clips
+```
+
+The launcher uses the published PyPI package and forwards all server options.
+
 ### Launch from a source checkout
 
 Install the MCP Python SDK in a virtual environment for the client to launch.

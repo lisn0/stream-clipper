@@ -1,0 +1,19 @@
+{
+  "name": "stream-clipper",
+  "version": "0.1.0",
+  "description": "Launch the Stream Clipper MCP server from PyPI.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisn0/stream-clipper.git"
+  },
+  "bin": {
+    "stream-clipper": "bin/mcp.mjs"
+  },
+  "files": [
+    "bin/mcp.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
