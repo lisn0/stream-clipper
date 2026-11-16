@@ -1,5 +1,6 @@
 {
   "name": "stream-clipper",
+  "mcpName": "io.github.lisn0/stream-clipper",
   "version": "0.1.0",
   "description": "Launch the Stream Clipper MCP server from PyPI.",
   "license": "MIT",
