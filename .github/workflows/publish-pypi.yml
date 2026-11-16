@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/stream-clipping-cli/
+      url: https://pypi.org/project/stream-clipper/
     permissions:
       contents: read
       id-token: write
@@ -41,8 +41,8 @@ jobs:
             exit 1
           fi
           version=${RELEASE_TAG#v}
-          wheel="stream_clipping_cli-${version}-py3-none-any.whl"
-          sdist="stream_clipping_cli-${version}.tar.gz"
+          wheel="stream_clipper-${version}-py3-none-any.whl"
+          sdist="stream_clipper-${version}.tar.gz"
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir dist \
             --pattern "$wheel" --pattern "$sdist"
           test -s "dist/$wheel"

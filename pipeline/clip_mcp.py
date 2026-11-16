@@ -141,7 +141,7 @@ def main():
     except ModuleNotFoundError as exc:
         if exc.name != "mcp":
             raise
-        parser.error("install 'stream-clipping-cli[mcp]' or the source checkout's requirements-mcp.txt")
+        parser.error("install 'stream-clipper[mcp]' or the source checkout's requirements-mcp.txt")
     server.run(transport="stdio")
 
 

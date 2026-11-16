@@ -21,7 +21,7 @@ prepare completed clips as drafts in PostFling for human review.
 Install the CLI from PyPI in a Python virtual environment:
 
 ```sh
-python -m pip install stream-clipping-cli
+python -m pip install stream-clipper
 ```
 
 Use `stream-clipping` to run the monitor and `stream-clipping-postfling` to
@@ -136,7 +136,7 @@ before connecting the client.
 With `uvx`, the client can launch the PyPI package with its MCP dependencies:
 
 ```sh
-uvx --from 'stream-clipping-cli[mcp]' stream-clipping-mcp \
+uvx --from 'stream-clipper[mcp]' stream-clipping-mcp \
   --clips-dir /absolute/path/to/output/live/clips
 ```
 
@@ -146,7 +146,7 @@ uvx --from 'stream-clipping-cli[mcp]' stream-clipping-mcp \
     "stream-clipping": {
       "command": "uvx",
       "args": [
-        "--from", "stream-clipping-cli[mcp]", "stream-clipping-mcp",
+        "--from", "stream-clipper[mcp]", "stream-clipping-mcp",
         "--clips-dir", "/absolute/path/to/output/live/clips"
       ]
     }
@@ -155,7 +155,7 @@ uvx --from 'stream-clipping-cli[mcp]' stream-clipping-mcp \
 ```
 
 If your client cannot find `uvx` on its `PATH`, use the absolute path to it.
-You can also run `python -m pip install 'stream-clipping-cli[mcp]'` in a virtual
+You can also run `python -m pip install 'stream-clipper[mcp]'` in a virtual
 environment and point the client at the installed `stream-clipping-mcp`
 executable with `--clips-dir` and the absolute directory path as arguments.
 
