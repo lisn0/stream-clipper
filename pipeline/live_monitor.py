@@ -43,14 +43,24 @@ from datetime import datetime, timezone
 from pathlib import Path
 from queue import Empty, SimpleQueue
 
-from clip_quality import inspect_source_window, suggest_pause_bounds
-from fortnite_hud import HudEvents, scan
-from live_drafts import LiveDrafts
-from moment_ranking import CHAT_WINDOW_SECONDS, ChatShare, MomentRanking, VIEWER_LOOKBACK
-from speech_excerpt import (load_speech_model, render_excerpt, speech_bounds,
-                            suggest_transcript_bounds, transcribe)
-from twitch_clock import TimestampedRecorder
-from twitch_slate import contains_slate
+if __package__:
+    from .clip_quality import inspect_source_window, suggest_pause_bounds
+    from .fortnite_hud import HudEvents, scan
+    from .live_drafts import LiveDrafts
+    from .moment_ranking import CHAT_WINDOW_SECONDS, ChatShare, MomentRanking, VIEWER_LOOKBACK
+    from .speech_excerpt import (load_speech_model, render_excerpt, speech_bounds,
+                                 suggest_transcript_bounds, transcribe)
+    from .twitch_clock import TimestampedRecorder
+    from .twitch_slate import contains_slate
+else:
+    from clip_quality import inspect_source_window, suggest_pause_bounds
+    from fortnite_hud import HudEvents, scan
+    from live_drafts import LiveDrafts
+    from moment_ranking import CHAT_WINDOW_SECONDS, ChatShare, MomentRanking, VIEWER_LOOKBACK
+    from speech_excerpt import (load_speech_model, render_excerpt, speech_bounds,
+                                suggest_transcript_bounds, transcribe)
+    from twitch_clock import TimestampedRecorder
+    from twitch_slate import contains_slate
 
 IRC_HOST, IRC_PORT = "irc.chat.twitch.tv", 6697
 HELIX = "https://api.twitch.tv/helix"

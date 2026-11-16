@@ -7,10 +7,16 @@ import json
 import threading
 from pathlib import Path
 
-from push_to_postfling import (
-    INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, caption_from, media_index,
-    postfling_opener, postfling_origin, save_clip_draft,
-)
+if __package__:
+    from .push_to_postfling import (
+        INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, caption_from, media_index,
+        postfling_opener, postfling_origin, save_clip_draft,
+    )
+else:
+    from push_to_postfling import (
+        INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, caption_from, media_index,
+        postfling_opener, postfling_origin, save_clip_draft,
+    )
 
 
 class PostFlingDrafts:

@@ -16,7 +16,19 @@ prepare completed clips as drafts in PostFling for human review.
   `--fortnite-hud` and [faster-whisper](https://github.com/SYSTRAN/faster-whisper)
   with a cached Whisper Small model for speech-assisted options.
 
-No package installation is needed for the standard-library pipeline and tests.
+## Installation
+
+Install the CLI from PyPI in a Python virtual environment:
+
+```sh
+python -m pip install stream-clipping-cli
+```
+
+Use `stream-clipping` to run the monitor and `stream-clipping-postfling` to
+preview or upload clips for draft review. These commands accept the same
+arguments as `pipeline/live_monitor.py` and `pipeline/push_to_postfling.py`
+in the source examples below. You can also run those scripts from a checkout
+without installing the package.
 
 ## Twitch use and authorization
 
@@ -117,17 +129,46 @@ Review each draft and destination before choosing direct delivery.
 ## Optional MCP server
 
 The stdio server lets an MCP client browse completed live clips while the
-monitor runs separately. Install the [MCP Python SDK](https://pypi.org/project/mcp/1.28.0/)
-in a virtual environment for the client to launch.
+monitor runs separately. Use an absolute path to a clips directory writable
+only by you and the monitor. Create it or wait for the monitor to save a clip
+before connecting the client.
+
+With `uvx`, the client can launch the PyPI package with its MCP dependencies:
+
+```sh
+uvx --from 'stream-clipping-cli[mcp]' stream-clipping-mcp \
+  --clips-dir /absolute/path/to/output/live/clips
+```
+
+```json
+{
+  "mcpServers": {
+    "stream-clipping": {
+      "command": "uvx",
+      "args": [
+        "--from", "stream-clipping-cli[mcp]", "stream-clipping-mcp",
+        "--clips-dir", "/absolute/path/to/output/live/clips"
+      ]
+    }
+  }
+}
+```
+
+If your client cannot find `uvx` on its `PATH`, use the absolute path to it.
+You can also run `python -m pip install 'stream-clipping-cli[mcp]'` in a virtual
+environment and point the client at the installed `stream-clipping-mcp`
+executable with `--clips-dir` and the absolute directory path as arguments.
+
+### Launch from a source checkout
+
+Install the MCP Python SDK in a virtual environment for the client to launch.
 
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements-mcp.txt
 ```
 
-Use absolute paths in your client's MCP server configuration. Create the clips
-directory or run the monitor until it saves a clip before connecting the client.
-Use a clips directory writable only by you and the monitor.
+Use absolute paths in your client's MCP server configuration.
 
 ```json
 {
@@ -142,6 +183,8 @@ Use a clips directory writable only by you and the monitor.
   }
 }
 ```
+
+### MCP tools
 
 `list_clips` shows the newest completed MP4 and insights pairs first. It returns
 clip IDs, Twitch logins, Unix timestamps, and optional duration, score, and

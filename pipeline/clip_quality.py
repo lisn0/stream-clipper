@@ -8,7 +8,10 @@ import math
 import re
 import subprocess
 
-from twitch_slate import SLATE, is_slate
+if __package__:
+    from .twitch_slate import SLATE, is_slate
+else:
+    from twitch_slate import SLATE, is_slate
 
 
 FRAME_SIZE = len(SLATE)

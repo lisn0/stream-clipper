@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stream-clipping-cli"
+version = "0.1.0"
+description = "Watch Twitch chat, record live streams, and export candidate clips."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Repository = "https://github.com/lisn0/stream-clipping-cli"
+Issues = "https://github.com/lisn0/stream-clipping-cli/issues"
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.28,<2"]
+
+[project.scripts]
+stream-clipping = "stream_clipping_cli.live_monitor:main"
+stream-clipping-mcp = "stream_clipping_cli.clip_mcp:main"
+stream-clipping-postfling = "stream_clipping_cli.push_to_postfling:main"
+
+[tool.setuptools]
+packages = ["stream_clipping_cli"]
+package-dir = { stream_clipping_cli = "pipeline" }

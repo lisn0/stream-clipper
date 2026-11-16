@@ -12,8 +12,12 @@ from itertools import islice
 from pathlib import Path
 from urllib.error import HTTPError
 
-from live_drafts import PostFlingDrafts
-from push_to_postfling import INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, media_index, save_clip_draft
+if __package__:
+    from .live_drafts import PostFlingDrafts
+    from .push_to_postfling import INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, media_index, save_clip_draft
+else:
+    from live_drafts import PostFlingDrafts
+    from push_to_postfling import INSIGHTS_SUFFIX, LIVE_CLIP_NAME, call_json, media_index, save_clip_draft
 
 
 MAX_INSIGHTS_BYTES = 128 * 1024
@@ -137,7 +141,7 @@ def main():
     except ModuleNotFoundError as exc:
         if exc.name != "mcp":
             raise
-        parser.error("install the optional requirements-mcp.txt dependencies")
+        parser.error("install 'stream-clipping-cli[mcp]' or the source checkout's requirements-mcp.txt")
     server.run(transport="stdio")
 
 
