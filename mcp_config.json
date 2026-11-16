@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "stream-clipper": {
+      "command": "npx",
+      "args": ["--yes", "stream-clipper@0.1.0", "--clips-dir", "${STREAM_CLIPS_DIR}"],
+      "variables": [
+        {
+          "name": "STREAM_CLIPS_DIR",
+          "title": "Absolute path to your clips folder",
+          "description": "Enter the absolute path to the directory containing paired completed clip MP4 files and their required *_insights.json sidecars."
+        }
+      ]
+    }
+  }
+}

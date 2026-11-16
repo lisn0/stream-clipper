@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "stream-clipper": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "--yes",
+        "stream-clipper@0.1.0",
+        "--clips-dir",
+        "${CLIPS_DIR}"
+      ]
+    }
+  }
+}

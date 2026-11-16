@@ -1,0 +1,26 @@
+{
+  "name": "stream-clipper",
+  "version": "0.1.0",
+  "description": "List completed Twitch clips and their metadata from a local Stream Clipper folder.",
+  "author": {
+    "name": "lisn0"
+  },
+  "homepage": "https://github.com/lisn0/stream-clipper",
+  "repository": "https://github.com/lisn0/stream-clipper",
+  "license": "MIT",
+  "keywords": [
+    "stream-clipping",
+    "video",
+    "clips",
+    "mcp"
+  ],
+  "userConfig": {
+    "clips_dir": {
+      "type": "directory",
+      "title": "Clips directory",
+      "description": "Choose the local directory containing clips that Stream Clipper should access.",
+      "required": true
+    }
+  },
+  "displayName": "Stream Clipper"
+}

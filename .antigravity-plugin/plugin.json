@@ -1,0 +1,20 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "stream-clipper",
+  "displayName": "Stream Clipper",
+  "version": "0.1.0",
+  "description": "List metadata for completed local Twitch stream clips through a read-only MCP server.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "List the clips in my configured clips folder.",
+    "Find clips from a particular stream or time in the returned metadata."
+  ],
+  "author": {
+    "name": "lisn0",
+    "url": "https://github.com/lisn0"
+  },
+  "homepage": "https://github.com/lisn0/stream-clipper",
+  "repository": "https://github.com/lisn0/stream-clipper",
+  "license": "MIT",
+  "keywords": ["twitch", "stream-clipping", "clips", "mcp"]
+}

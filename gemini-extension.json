@@ -1,0 +1,16 @@
+{
+  "name": "stream-clipper",
+  "version": "0.1.0",
+  "description": "Browse completed Twitch clips in the current workspace.",
+  "mcpServers": {
+    "stream-clipper": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "stream-clipper@0.1.0",
+        "--clips-dir",
+        "${workspacePath}"
+      ]
+    }
+  }
+}

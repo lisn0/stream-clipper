@@ -1,0 +1,26 @@
+{
+  "name": "stream-clipper",
+  "version": "0.1.0",
+  "description": "Browse completed clips from live Twitch streams in a local folder.",
+  "author": {
+    "name": "lisn0"
+  },
+  "homepage": "https://github.com/lisn0/stream-clipper",
+  "repository": "https://github.com/lisn0/stream-clipper",
+  "license": "MIT",
+  "mcpServers": "./.cursor-plugin/mcp.json",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "CLIPS_DIR": {
+        "type": "string",
+        "title": "Clips directory",
+        "description": "Absolute path to a folder containing completed clips and their insights files."
+      }
+    },
+    "required": [
+      "CLIPS_DIR"
+    ]
+  },
+  "logo": "assets/logo.svg"
+}

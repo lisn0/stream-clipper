@@ -229,6 +229,20 @@ Call `save_postfling_draft` with a `clip_id` from `list_clips`. The tool uploads
 that MP4 to the configured PostFling workspace and saves an editable draft for
 the mapped destination. Review and publish through PostFling.
 
+## Client plugins
+
+The Claude Code, Antigravity, Cursor, and Gemini CLI packages launch the local MCP
+server. Put Node.js and `uvx` on the client's PATH. Set **Clips directory** to
+the absolute path to a folder containing completed MP4 files and their
+`*_insights.json` sidecars.
+
+Open the plugin from this repository. In Claude Code, run `claude --plugin-dir ./plugins/claude`
+from a checkout. In Antigravity, use `agy plugin install .`. In Cursor, use
+**Import from Disk** in **Customize**. For Gemini CLI, install this repository with `gemini extensions install https://github.com/lisn0/stream-clipper`. Start Gemini CLI from your clips folder.
+
+Ask the client to list the newest clips. The plugin browses completed clips
+using `list_clips`. The Twitch monitor is started separately.
+
 ## Tests
 
 With FFmpeg and ffprobe installed, run the full suite from the repository root:
