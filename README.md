@@ -247,3 +247,6 @@ files to the stable GitHub release before publishing it.
 Publishing the GitHub release with tag `vX.Y.Z` uploads the Python distributions
 to PyPI first and the npm launcher second. Both registries require a trusted
 publisher for `publish-pypi.yml`. The PyPI job uses the `pypi` environment.
+
+To update the MCP Registry listing, match the versions in `server.json` to the
+published npm package and run the **Publish to MCP Registry** workflow on `main`.
