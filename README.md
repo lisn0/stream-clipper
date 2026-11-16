@@ -164,7 +164,7 @@ executable with `--clips-dir` and the absolute directory path as arguments.
 With Node.js and `uvx` on PATH, launch the same MCP server from GitHub:
 
 ```sh
-npx --yes --package=github:lisn0/stream-clipper stream-clipper \
+npx --yes --allow-git=root --package=github:lisn0/stream-clipper stream-clipper \
   --clips-dir /path/to/clips
 ```
 
