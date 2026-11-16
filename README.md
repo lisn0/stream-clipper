@@ -249,4 +249,5 @@ to PyPI first and the npm launcher second. Both registries require a trusted
 publisher for `publish-pypi.yml`. The PyPI job uses the `pypi` environment.
 
 To update the MCP Registry listing, match the versions in `server.json` to the
-published npm package and run the **Publish to MCP Registry** workflow on `main`.
+published npm package. Push the manifest, then use `mcp-publisher publish server.json`
+from a machine authenticated to the official registry.
