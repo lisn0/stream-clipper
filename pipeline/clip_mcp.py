@@ -134,7 +134,8 @@ def make_server(clips_dir: Path, postfling: PostFlingDrafts | None):
     ) -> dict[str, list[dict[str, str | float]]]:
         """List completed live clips from the local clips directory, newest first, as {"clips": [...]}.
 
-        Each entry has clip_id (pass it to save_postfling_draft), channel (Twitch login),
+        Each entry has clip_id (a stable ID for the clip; when the server runs with
+        --postfling-config, a save_postfling_draft tool also accepts it), channel (Twitch login),
         timestamp (Unix seconds), and, when recorded, duration (seconds), score, and trigger
         (chat, chat_reaction, viewer_clip, elimination, knock, or win). Only clips with a
         valid MP4 and insights sidecar are listed; incomplete or malformed ones are skipped.
